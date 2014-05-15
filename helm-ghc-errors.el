@@ -21,8 +21,39 @@
 
 ;; Code.
 
-(require 'helm)
+(require 'cl)
 (require 'ghc)
+(require 'helm)
+(require 'shut-up)
 
+
+(defstruct helm-ghc-error
+  file
+  row
+  column
+  message
+  type)
+
+(defun helm-ghc--errors/warnings-candidates ()
+  (let* ((name (concat " ghc-modi:" ghc-process-process-name))
+         (buf (get-buffer-create name)))
+    (with-current-buffer buf
+      (cl-loop for err in (ghc-read-lisp-this-buffer)
+               for e = (split-string err ":")
+               for msg = (mapconcat 'identity (nthcdr 3 e) ":")
+               for typ = (if (string-match-p "^Warning" msg) 'warning 'err)
+               collect (make-helm-ghc-error
+                        :file (nth 0 e)
+                        :row (string-to-number (nth 1 e))
+                        :column (string-to-number (nth 2 e))
+                        :message (with-temp-buffer
+                                   (shut-up
+                                     (insert msg)
+                                     (goto-char (point-min))
+                                     (replace-string "Warning: " "")
+                                     (buffer-string)))
+                        :type typ
+                        ))
+      )))
 
 (provide 'helm-ghc-errors)
