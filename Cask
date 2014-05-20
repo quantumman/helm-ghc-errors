@@ -11,6 +11,7 @@
   (depends-on "dash")
   (depends-on "ecukes")
   (depends-on "el-mock")
+  (depends-on "el-spec")
   (depends-on "ert-runner")
   (depends-on "espuds")
   (depends-on "ghc" "4.1.0")
