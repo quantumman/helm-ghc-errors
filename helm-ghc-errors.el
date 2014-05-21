@@ -30,6 +30,9 @@
 
 (defvar helm-ghc-errors/warnings-source
   '((name . "GHC Errors/Warnings")
+    (candidates . (lambda ()
+                    (with-current-buffer helm-current-buffer
+                      (helm-ghc--errors/warnings-candidates))))
     )
   "Source for errors/warnings of GHC."
   )
