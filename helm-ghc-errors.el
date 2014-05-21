@@ -27,6 +27,11 @@
 (require 'shut-up)
 
 
+(defun helm-ghc-display-errors/warnings ()
+  (interactive)
+  (helm :sources helm-ghc-errors/warnings-source)
+  )
+
 
 (defvar helm-ghc-errors/warnings-source
   '((name . "GHC Errors/Warnings")
