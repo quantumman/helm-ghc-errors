@@ -1,4 +1,5 @@
 (require 'el-spec)
+(require 'el-mock)
 (require 'helm-ghc-errors)
 (require 'ghc)
 
@@ -55,4 +56,28 @@
                                      :type 'warning
                                      ))))
         (should (equal (helm-ghc--errors/warnings-candidates) info)))))
+  )
+
+(describe "helm-ghc--errors/warnings-transformer"
+  (it "foramts error/warning messages"
+      (let* ((candidates
+              `(,(make-helm-ghc-error :file "bar/foo/test.hs"
+                                      :row 8
+                                      :column 1
+                                      :message "test 1"
+                                      :type 'err
+                                      )
+                ,(make-helm-ghc-error :file "hoge/foobar.hs"
+                                      :row 1
+                                      :column 10
+                                      :message "foobar"
+                                      :type 'warning
+                                      )))
+             (actual (with-mock
+                       (mock (get-file-buffer *) => "TEST.HS")
+                       (helm-ghc--errors/warnings-transformer candidates)
+                       ))
+             (expected '("TEST.HS:8:Error\n\ntest 1" "TEST.HS:1:Warning\n\nfoobar")))
+        (should (equal actual expected)))
+      )
   )

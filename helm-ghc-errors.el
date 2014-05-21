@@ -72,4 +72,12 @@
                         ))
       )))
 
+(defun helm-ghc--errors/warnings-transformer (candidates)
+  (cl-loop for e in candidates
+           collect (format "%s:%d:%s\n\n%s"
+                           (get-file-buffer (helm-ghc-error-file e))
+                           (helm-ghc-error-row e)
+                           (if (eq 'err (helm-ghc-error-type e)) "Error" "Warning")
+                           (helm-ghc-error-message e))))
+
 (provide 'helm-ghc-errors)
