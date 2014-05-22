@@ -39,6 +39,7 @@
                     (with-current-buffer helm-current-buffer
                       (helm-ghc--errors/warnings-candidates))))
     (candidate-transformer . helm-ghc--errors/warnings-transformer)
+    (multiline)
     )
   "Source for errors/warnings of GHC."
   )
