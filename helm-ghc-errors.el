@@ -27,6 +27,14 @@
 (require 'shut-up)
 
 
+
+(defvar helm-ghc-errors/warnings-source
+  '((name . "GHC Errors/Warnings")
+    )
+  "Source for errors/warnings of GHC."
+  )
+
+
 (defstruct helm-ghc-error
   file
   row
