@@ -13,7 +13,7 @@ test-suite: unit
 	${MAKE} acceptance
 
 unit:
-	${CASK} exec ert-runner --no-win
+	${CASK} exec ert-runner
 
 acceptance:
 	${CASK} exec ecukes --reporter spec
