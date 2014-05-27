@@ -16,8 +16,10 @@
 (require 'espuds)
 (require 'ert)
 
+(setq project-root-directory nil)
 (Setup
- ;; Before anything has run
+ (setq project-root-directory (cadr (split-string (pwd) " ")))
+ (print project-root-directory)
  )
 
 (Before
@@ -25,7 +27,7 @@
  )
 
 (After
- ;; After each scenario is run
+ (cd project-root-directory)
  )
 
 (Teardown
