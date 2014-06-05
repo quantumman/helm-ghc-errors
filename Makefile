@@ -10,10 +10,10 @@ test: clean-elc
 	${MAKE} clean-elc
 
 test-suite: unit
-	acceptance
+	${MAKE} acceptance
 
 unit:
-	${CASK} exec ert-runner --no-win
+	${CASK} exec ert-runner
 
 acceptance:
 	${CASK} exec ecukes --reporter spec
